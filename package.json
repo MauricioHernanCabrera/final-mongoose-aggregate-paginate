@@ -1,0 +1,29 @@
+{
+  "name": "final-mongoose-aggregate-paginate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MauricioHernanCabrera/final-mongoose-aggregate-paginate.git"
+  },
+  "keywords": [
+    "mongoose",
+    "aggregate",
+    "paginate",
+    "paginator",
+    "cursor"
+  ],
+  "author": "Mauricio Hernan Cabrera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MauricioHernanCabrera/final-mongoose-aggregate-paginate/issues"
+  },
+  "homepage": "https://github.com/MauricioHernanCabrera/final-mongoose-aggregate-paginate#readme",
+  "dependencies": {
+    "lodash": "^4.17.20"
+  }
+}
