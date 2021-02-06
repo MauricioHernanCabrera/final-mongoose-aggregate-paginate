@@ -101,7 +101,7 @@ const defaultOptions = {
 };
 
 async function paginate(cursor, options) {
-  options = merge(defaultOptions, paginate.options, options);
+  options = merge(JSON.parse(JSON.stringify(defaultOptions)), paginate.options, options);
 
   const { paginator, sort, project, customLabels, errorMessages } = options;
 
