@@ -24,27 +24,35 @@ const getTotalDocs = async (self, pipeline) => {
 
 const loadSortInCursor = (cursor, sort) => {
   if (sort) {
-    return cursor.sort(sort);
+    cursor._pipeline = [...cursor._pipeline, { $sort: sort }];
   }
-
-  return cursor;
 };
 
 const loadPaginatorInCursor = (cursor, page, limit) => {
   if (limit !== -1) {
     const currentPage = page - 1;
-    return cursor.skip(currentPage === 0 ? 0 : currentPage * limit).limit(limit);
-  }
 
-  return cursor;
+    cursor._pipeline = [
+      ...cursor._pipeline,
+      {
+        $skip: currentPage === 0 ? 0 : currentPage * limit,
+      },
+      {
+        $limit: limit,
+      },
+    ];
+  }
 };
 
 const loadProjectInCursor = (cursor, project) => {
   if (project) {
-    return cursor.project(project);
+    cursor._pipeline = [
+      ...cursor._pipeline,
+      {
+        $project: project,
+      },
+    ];
   }
-
-  return cursor;
 };
 
 const getNextPage = (docsLength, page, limit) => {
@@ -112,9 +120,9 @@ async function paginate(cursor, options) {
 
   const promiseTotalDocs = getTotalDocs(this, cursor._pipeline);
 
-  cursor = loadSortInCursor(cursor, sort);
-  cursor = loadPaginatorInCursor(cursor, page, limit);
-  cursor = loadProjectInCursor(cursor, project);
+  loadSortInCursor(cursor, sort);
+  loadPaginatorInCursor(cursor, page, limit);
+  loadProjectInCursor(cursor, project);
 
   const [totalDocs, docs] = await Promise.all([promiseTotalDocs, cursor]);
 
